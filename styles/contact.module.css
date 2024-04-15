@@ -1,0 +1,42 @@
+/* pages/contact.module.css */
+
+.container {
+    padding: 2rem;
+}
+
+.title {
+    color: #2a9d8f;
+    /* Un color suave y acogedor */
+    margin-bottom: 1rem;
+}
+
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.contactForm label {
+    margin-top: 1rem;
+}
+
+.contactForm input,
+.contactForm textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.contactForm button {
+    margin-top: 1rem;
+    background-color: #264653;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.contactForm button:hover {
+    background-color: #2a9d8f;
+}

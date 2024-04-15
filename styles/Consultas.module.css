@@ -1,0 +1,55 @@
+/* styles/Consultas.module.css */
+
+.container {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+}
+
+.title {
+    text-align: center;
+    color: #5e6472;
+    /* Un color neutro para el título */
+    margin-bottom: 2rem;
+}
+
+.introduction {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    text-align: justify;
+}
+
+.consultationTypes,
+.booking {
+    margin-bottom: 2rem;
+}
+
+.type {
+    background-color: #f0f0f0;
+    /* Un fondo suave para cada tipo de consulta */
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.type h3 {
+    color: #3a7a5f;
+    /* Un color que inspire calma */
+}
+
+.type p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    text-align: justify;
+}
+
+.booking h2 {
+    text-align: center;
+    color: #5e6472;
+}
+
+.booking p {
+    text-align: center;
+    margin-top: 1rem;
+}

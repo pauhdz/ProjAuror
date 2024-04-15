@@ -1,0 +1,13 @@
+/* pages/about.module.css */
+
+.container {
+    padding: 2rem;
+}
+
+.title {
+    color: #6b705c;
+    /* Un color suave y calmado */
+    margin-bottom: 1rem;
+}
+
+/* Añade más estilos según tu diseño y preferencias */

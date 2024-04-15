@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model activities {
+  activity_id         Int                  @id @default(autoincrement())
+  category_id         Int?
+  name                String               @db.VarChar(255)
+  description         String               @db.Text
+  price               Decimal              @db.Decimal(10, 2)
+  activity_categories activity_categories? @relation(fields: [category_id], references: [category_id], onDelete: NoAction, onUpdate: NoAction, map: "activities_ibfk_1")
+  activity_bookings   activity_bookings[]
+  activity_sessions   activity_sessions[]
+  cart_items          cart_items[]
+  subscriptions       subscriptions[]
+
+  @@index([category_id], map: "category_id")
+}
+
+model activity_bookings {
+  booking_id        Int                @id @default(autoincrement())
+  user_id           Int?
+  activity_id       Int?
+  session_id        Int?
+  users             users?             @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "activity_bookings_ibfk_1")
+  activities        activities?        @relation(fields: [activity_id], references: [activity_id], onDelete: NoAction, onUpdate: NoAction, map: "activity_bookings_ibfk_2")
+  activity_sessions activity_sessions? @relation(fields: [session_id], references: [session_id], onDelete: NoAction, onUpdate: NoAction, map: "activity_bookings_ibfk_3")
+
+  @@index([activity_id], map: "activity_id")
+  @@index([session_id], map: "session_id")
+  @@index([user_id], map: "user_id")
+}
+
+model activity_categories {
+  category_id   Int          @id @default(autoincrement())
+  category_name String       @db.VarChar(255)
+  activities    activities[]
+}
+
+model activity_sessions {
+  session_id        Int                 @id @default(autoincrement())
+  activity_id       Int?
+  session_start     DateTime            @db.DateTime(0)
+  session_end       DateTime            @db.DateTime(0)
+  capacity          Int
+  activity_bookings activity_bookings[]
+  activities        activities?         @relation(fields: [activity_id], references: [activity_id], onDelete: NoAction, onUpdate: NoAction, map: "activity_sessions_ibfk_1")
+
+  @@index([activity_id], map: "activity_id")
+}
+
+model admin_logs {
+  admin_log_id    Int       @id @default(autoincrement())
+  admin_id        Int?
+  log_description String    @db.Text
+  log_date        DateTime? @default(now()) @db.Timestamp(0)
+  users           users?    @relation(fields: [admin_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "admin_logs_ibfk_1")
+
+  @@index([admin_id], map: "admin_id")
+}
+
+model audit_logs {
+  log_id             Int       @id @default(autoincrement())
+  user_id            Int?
+  action_type        String    @db.VarChar(255)
+  action_description String    @db.Text
+  action_date        DateTime? @default(now()) @db.Timestamp(0)
+  users              users?    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "audit_logs_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model cart_items {
+  item_id        Int             @id @default(autoincrement())
+  cart_id        Int?
+  activity_id    Int?
+  shopping_carts shopping_carts? @relation(fields: [cart_id], references: [cart_id], onDelete: NoAction, onUpdate: NoAction, map: "cart_items_ibfk_1")
+  activities     activities?     @relation(fields: [activity_id], references: [activity_id], onDelete: NoAction, onUpdate: NoAction, map: "cart_items_ibfk_2")
+
+  @@index([activity_id], map: "activity_id")
+  @@index([cart_id], map: "cart_id")
+}
+
+model financial_reports {
+  report_id   Int                    @id @default(autoincrement())
+  type        financial_reports_type
+  amount      Decimal                @db.Decimal(10, 2)
+  description String?                @db.Text
+  report_date DateTime?              @default(now()) @db.Timestamp(0)
+}
+
+model payment_methods {
+  method_id   Int        @id @default(autoincrement())
+  method_name String     @db.VarChar(255)
+  payments    payments[]
+}
+
+model payments {
+  payment_id        Int              @id @default(autoincrement())
+  user_id           Int?
+  amount            Decimal          @db.Decimal(10, 2)
+  payment_method_id Int?
+  payment_date      DateTime?        @default(now()) @db.Timestamp(0)
+  users             users?           @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "payments_ibfk_1")
+  payment_methods   payment_methods? @relation(fields: [payment_method_id], references: [method_id], onDelete: NoAction, onUpdate: NoAction, map: "payments_ibfk_2")
+
+  @@index([payment_method_id], map: "payment_method_id")
+  @@index([user_id], map: "user_id")
+}
+
+model roles {
+  role_id   Int     @id @default(autoincrement())
+  role_name String  @db.VarChar(255)
+  users     users[]
+}
+
+model shopping_carts {
+  cart_id    Int          @id @default(autoincrement())
+  user_id    Int?
+  cart_items cart_items[]
+  users      users?       @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "shopping_carts_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model subscriptions {
+  subscription_id Int         @id @default(autoincrement())
+  user_id         Int?
+  activity_id     Int?
+  start_date      DateTime    @db.Date
+  end_date        DateTime    @db.Date
+  users           users?      @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "subscriptions_ibfk_1")
+  activities      activities? @relation(fields: [activity_id], references: [activity_id], onDelete: NoAction, onUpdate: NoAction, map: "subscriptions_ibfk_2")
+
+  @@index([activity_id], map: "activity_id")
+  @@index([user_id], map: "user_id")
+}
+
+model system_settings {
+  setting_id    Int       @id @default(autoincrement())
+  setting_name  String    @db.VarChar(255)
+  setting_value String    @db.Text
+  last_updated  DateTime? @default(now()) @db.Timestamp(0)
+}
+
+model user_contacts {
+  contact_id    Int    @id @default(autoincrement())
+  user_id       Int?
+  contact_type  String @db.VarChar(255)
+  contact_value String @db.VarChar(255)
+  users         users? @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "user_contacts_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model user_profiles {
+  profile_id  Int       @id @default(autoincrement())
+  user_id     Int?      @unique(map: "user_id")
+  first_name  String?   @db.VarChar(255)
+  last_name   String?   @db.VarChar(255)
+  birth_date  DateTime? @db.Date
+  profile_pic String?   @db.VarChar(255)
+  users       users?    @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "user_profiles_ibfk_1")
+}
+
+model users {
+  user_id           Int                 @id @default(autoincrement())
+  username          String              @unique(map: "username") @db.VarChar(255)
+  email             String              @unique(map: "email") @db.VarChar(255)
+  password_hash     String              @db.VarChar(255)
+  role_id           Int?
+  created_at        DateTime?           @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?           @default(now()) @db.Timestamp(0)
+  activity_bookings activity_bookings[]
+  admin_logs        admin_logs[]
+  audit_logs        audit_logs[]
+  payments          payments[]
+  shopping_carts    shopping_carts[]
+  subscriptions     subscriptions[]
+  user_contacts     user_contacts[]
+  user_profiles     user_profiles?
+  roles             roles?              @relation(fields: [role_id], references: [role_id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+
+  @@index([role_id], map: "role_id")
+}
+
+enum financial_reports_type {
+  income
+  expense
+}

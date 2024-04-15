@@ -1,0 +1,36 @@
+/* Este es un ejemplo básico. Asegúrate de ajustar los estilos según el diseño de tu sitio. */
+
+.container {
+    padding: 20px;
+}
+
+.title,
+.sessionTypes h2,
+.benefits h2,
+.join h2 {
+    text-align: center;
+    color: #005a4a;
+    /* Un color que inspire calma */
+}
+
+.introduction,
+.type p,
+.benefits ul,
+.join p {
+    text-align: justify;
+    margin-top: 10px;
+}
+
+.sessionTypes,
+.benefits,
+.join {
+    margin-top: 20px;
+}
+
+.type {
+    margin-bottom: 15px;
+}
+
+.benefits ul {
+    list-style: inside;
+}

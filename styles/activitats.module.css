@@ -1,0 +1,44 @@
+/* pages/services.module.css */
+
+.container {
+    padding: 2rem;
+}
+
+.title {
+    color: #81b29a;
+    /* Un tono que evoque calma y serenidad */
+    margin-bottom: 1rem;
+}
+
+.servicesList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.service {
+    border: 1px solid #e2e8f0;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.service h2 {
+    color: #3d405b;
+}
+
+.service p {
+    margin-bottom: 1rem;
+}
+
+/* Estilos para los enlaces a más información */
+.service a {
+    text-decoration: none;
+    color: #f4f1de;
+    background-color: #3d405b;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.service a:hover {
+    background-color: #81b29a;
+}
