@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
     return (
         <>
             {!isRegisterOrLoginPage && <Navbar />}
-            <main>{children}</main>
+            <main className='pb-20'>{children}</main>
             {!isRegisterOrLoginPage && <Footer />}
         </>
     );

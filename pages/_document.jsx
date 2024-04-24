@@ -15,7 +15,7 @@ class MyDocument extends Document {
                     {/* No olvides incluir el favicon y cualquier otro recurso global */}
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
-                <body>
+                <body className='bg-maize-100'>
                     <Main />
                     <NextScript />
                 </body>
