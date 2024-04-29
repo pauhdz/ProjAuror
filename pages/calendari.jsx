@@ -5,7 +5,6 @@ import Calendar from '@/components/calendarioReservas';
 const Calendari = () => {
     return (
         <div>
-            <FormActivitats/>
             <Calendar/>
         </div>
     );
