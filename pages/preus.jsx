@@ -1,10 +1,9 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import TaulaPreus from "@/components/taulaPreus";
 
 const Preus = () => {
     return (
         <div>
-            <h1>Preus</h1>
+            <TaulaPreus/>
         </div>
     );
 }

@@ -3,19 +3,20 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from "@fullcalendar/interaction";
 import FormActivitats from './formActivitats';
+import Modal from 'react-modal';
+import Button from 'react-bootstrap/Button';
 
 export default function Calendar() {
     const [calendarView] = useState('dayGridMonth');
     const [showDialog, setShowDialog] = useState(false);
     const [selectedDate, setSelectedDate] = useState(null);
-    const [events, setEvents] = useState([]); // Estado para almacenar los eventos
-    const [showEventDetails, setShowEventDetails] = useState(false); // Estado para controlar la visibilidad del modal de detalles
-    const [selectedEvent, setSelectedEvent] = useState(null); // Estado para almacenar el evento seleccionado
+    const [events, setEvents] = useState([]);
+
 
     const handleDateClick = (info) => {
         setSelectedDate(info.dateStr);
         setShowDialog(true);
-    };
+    }
 
     const handleEventSubmit = (eventData) => {
         setEvents([...events, eventData]);
@@ -23,24 +24,22 @@ export default function Calendar() {
     };
 
     const handleEventClick = (info) => {
-        // Establecer la fecha seleccionada con la fecha del evento
-        setSelectedDate(info.event.start.toISOString().split('T')[0]);
-        // Pasar los detalles del evento al formulario
-        setSelectedEvent(info.event);
-        // Abrir el formulario de edición
-        setShowDialog(true);
+        const eventEl = info.el;
+        const rect = eventEl.getBoundingClientRect();
+        setContextMenuVisible(true);
+        setContextMenuPosition(rect);
     };
 
-
     return (
-        <div className='px-20 pt-10'>
+        <div className='p-20'>
             <div className='bg-white p-4 rounded-md shadow-2xl'>
                 <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
                     initialView={calendarView}
+                    timeZone='local'
                     height="700px"
                     headerToolbar={{
-                        left: 'prev,next',
+                        left: 'today prev,next',
                         center: 'title',
                         right: 'dayGridWeek,dayGridDay,dayGridMonth'
                     }}
@@ -51,18 +50,10 @@ export default function Calendar() {
                     }}
                     dateClick={handleDateClick}
                     events={events}
-                    eventClick={handleEventClick} // Agrega el manejador del evento de clic en eventos
+                    eventClick={handleEventClick}
                 />
-                {showDialog && <FormActivitats onClose={() => setShowDialog(false)} selectedDate={selectedDate} selectedEvent={selectedEvent} onSubmit={handleEventSubmit} />}
-                {showEventDetails && selectedEvent && (
-                    <div>
-                        <h2>{selectedEvent.title}</h2>
-                        <p>Fecha y hora de inicio: {selectedEvent.start.toLocaleString()}</p>
-                        <p>Fecha y hora de finalización: {selectedEvent.end.toLocaleString()}</p>
-                        <p>Número de personas: {selectedEvent.numPersonas}</p>
-                        <button onClick={() => setShowEventDetails(false)}>Cerrar</button>
-                    </div>
-                )}
+
+                {showDialog && <FormActivitats onClose={() => setShowDialog(false)} selectedDate={selectedDate} onSubmit={handleEventSubmit} />}
             </div>
         </div>
     );

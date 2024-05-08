@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import Navbar from './Navbar'; // Asegúrate de importar tus componentes Navbar y Footer
 import Footer from './Footer';
 
+
 const Layout = ({ children }) => {
     const router = useRouter();
     const isRegisterOrLoginPage = router.pathname === '/register' || router.pathname === '/login'; // Combina las condiciones para registro y login
@@ -9,7 +10,7 @@ const Layout = ({ children }) => {
     return (
         <>
             {!isRegisterOrLoginPage && <Navbar />}
-            <main className='pb-20'>{children}</main>
+            <main className='bg-maize-100'>{children}</main>
             {!isRegisterOrLoginPage && <Footer />}
         </>
     );
