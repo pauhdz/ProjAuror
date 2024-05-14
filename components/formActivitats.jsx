@@ -30,7 +30,7 @@ const FormActivitats = ({ onClose, selectedDate, onSubmit, eventData }) => {
                     class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-gray-800 border-b" defaultValue={eventData ? eventData.title : ''}/>
 
                 <div className="flex gap-10 items-center mb-4">
-                    <label for="fechaActividad" class="text-lg">Data de la Activitat:</label>
+                    <label for="fechaActividad" class="text-lg">Data de la Activita:</label>
                     <input type="date" id="fechaActividad" name="fechaActividad" required
                         value={selectedDate} // Establece el valor predeterminado de la fecha seleccionada
                         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-gray-800 border-b w-52" />
