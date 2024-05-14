@@ -25,7 +25,7 @@ const FormActivitats = ({ onClose, selectedDate, onSubmit, eventData }) => {
     return (
         <form onSubmit={handleSubmit} className="p-20">
             <div class="flex flex-col space-y-4 rounded-lg shadow-2xl py-6 px-14 bg-white">
-                <label for="nombreActividad" class="text-lg">Nom de la Activitat:</label>
+                <label for="nombreActividad" class="text-lg">Nom de la Activita:</label>
                 <input type="text" id="nombreActividad" name="nombreActividad" required
                     class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-gray-800 border-b" defaultValue={eventData ? eventData.title : ''}/>
 
